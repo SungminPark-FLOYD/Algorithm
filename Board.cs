@@ -161,13 +161,72 @@ namespace Algorithm
             _tile = new TileType[size, size];
             _size = size;
 
-            GenerateByBinaryTree();
+            //Mazes for Programmers
+            //GenerateByBinaryTree();
+            GenerateBySideWinder();
 
         }
 
+        //SideWinder 미로 생성알고리즘 
+        void GenerateBySideWinder()
+        {
+            //일단 길을 다 막아본다
+            for (int y = 0; y < _size; y++)
+            {
+                for (int x = 0; x < _size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        _tile[y, x] = TileType.Wall;
+                    else
+                        _tile[y, x] = TileType.Empty;
+                }
+            }
+            //랜덤으로 우측 혹은 아래로 길을 뚫는 작업
+            Random ran = new Random();
+            for (int y = 0; y < _size; y++)
+            {
+                int count = 1;
+                for (int x = 0; x < _size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        continue;
+
+                    //강제로 벽까지 이동 제한
+                    if (y == _size - 2 && x == _size - 2)
+                        continue;
+                    //벽에 막히면 돌아가도록 한다
+                    if (y == _size - 2)
+                    {
+                        _tile[y, x + 1] = TileType.Empty;
+                        continue;
+                    }
+                    if (x == _size - 2)
+                    {
+                        _tile[y + 1, x] = TileType.Empty;
+                        continue;
+                    }
+
+                    //우측으로 갈 경우
+                    if (ran.Next(0, 2) == 0)
+                    {
+                        _tile[y, x + 1] = TileType.Empty;
+                        count++;
+                    }
+                    //아래로 갈 경우
+                    else
+                    {
+                        int randomIndex = ran.Next(0, count);
+                        _tile[y + 1, x - randomIndex*2] = TileType.Empty;
+                        count = 1;
+                    }
+
+                }
+            }
+        }
+        //Binary Tree 미로 생성알고리즘
         void GenerateByBinaryTree()
         {
-            //Binary Tree 미로 생성알고리즘
+            
             //벽이 다 막혀 있다는 가정이 깔려있음
 
             //일단 길을 다 막아본다
