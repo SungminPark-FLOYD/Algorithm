@@ -7,8 +7,8 @@ namespace Algorithm
     /*
         class MyList<T>
         {
-            const int DEFAULT_SIZE = 1;
-            T[] _data = new T[DEFAULT_SIZE];
+            const int DEFAULTSize = 1;
+            T[] _data = new T[DEFAULTSize];
 
             public int Count;       //실제로 사용중인 데이터 개수
             public int Capacity { get { return _data.Length; } }   //예약된 데이터 개수
@@ -146,20 +146,25 @@ namespace Algorithm
     class Board
     {
         const char CIRCLE = '\u25cf';
-        public TileType[,] _tile; //배열
-        public int _size;
+        public TileType[,] Tile { get; private set; } //배열
+        public int Size { get; private set; }
+
+        Player _player;
 
         public enum TileType
         {
             Empty,
             Wall,
         }
-        public void Initialize(int size)
+        public void Initialize(int size, Player player)
         {
             //짝수면 리턴
             if (size % 2 == 0) return;
-            _tile = new TileType[size, size];
-            _size = size;
+
+            _player = player;
+
+            Tile = new TileType[size, size];
+            Size = size;
 
             //Mazes for Programmers
             //GenerateByBinaryTree();
@@ -171,52 +176,52 @@ namespace Algorithm
         void GenerateBySideWinder()
         {
             //일단 길을 다 막아본다
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
-                        _tile[y, x] = TileType.Wall;
+                        Tile[y, x] = TileType.Wall;
                     else
-                        _tile[y, x] = TileType.Empty;
+                        Tile[y, x] = TileType.Empty;
                 }
             }
             //랜덤으로 우측 혹은 아래로 길을 뚫는 작업
             Random ran = new Random();
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
                 int count = 1;
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
                         continue;
 
                     //강제로 벽까지 이동 제한
-                    if (y == _size - 2 && x == _size - 2)
+                    if (y == Size - 2 && x == Size - 2)
                         continue;
                     //벽에 막히면 돌아가도록 한다
-                    if (y == _size - 2)
+                    if (y == Size - 2)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                         continue;
                     }
-                    if (x == _size - 2)
+                    if (x == Size - 2)
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        Tile[y + 1, x] = TileType.Empty;
                         continue;
                     }
 
                     //우측으로 갈 경우
                     if (ran.Next(0, 2) == 0)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                         count++;
                     }
                     //아래로 갈 경우
                     else
                     {
                         int randomIndex = ran.Next(0, count);
-                        _tile[y + 1, x - randomIndex*2] = TileType.Empty;
+                        Tile[y + 1, x - randomIndex*2] = TileType.Empty;
                         count = 1;
                     }
 
@@ -230,45 +235,45 @@ namespace Algorithm
             //벽이 다 막혀 있다는 가정이 깔려있음
 
             //일단 길을 다 막아본다
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
-                        _tile[y, x] = TileType.Wall;
+                        Tile[y, x] = TileType.Wall;
                     else
-                        _tile[y, x] = TileType.Empty;
+                        Tile[y, x] = TileType.Empty;
                 }
             }
             //랜덤으로 우측 혹은 아래로 길을 뚫는 작업
             Random ran = new Random();
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
                         continue;
-                    if (y == _size - 2 && x == _size - 2)
+                    if (y == Size - 2 && x == Size - 2)
                         continue;
                     //벽에 막히면 돌아가도록 한다
-                    if (y == _size - 2)
+                    if (y == Size - 2)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                         continue;
                     }
-                    if (x == _size - 2)
+                    if (x == Size - 2)
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        Tile[y + 1, x] = TileType.Empty;
                         continue;
                     }
 
                     if (ran.Next(0, 2) == 0)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                     }
                     else
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        Tile[y + 1, x] = TileType.Empty;
                     }
 
                 }
@@ -278,11 +283,15 @@ namespace Algorithm
         public void Render()
         {
             ConsoleColor prevColor = Console.ForegroundColor;
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
-                    Console.ForegroundColor = GetTileColor(_tile[y, x]);
+                    //플레이어 좌표를 갖고 와서 그 좌표랑 현재 y,x 가 일치하면 플레이어 전용 색상으로 표시
+                    if(y == _player.PosY && x == _player.PosX)
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    else
+                        Console.ForegroundColor = GetTileColor(Tile[y, x]);
         
                     Console.Write(CIRCLE);
                 }
