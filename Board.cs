@@ -64,9 +64,10 @@ namespace Algorithm
         }
     }
     */
-    #endregion\
+    #endregion
 
-
+    #region 연결리스트 구현 연습
+    /*
     //연결리스트 주소로 바로 접근이 불가능하다
     class Room<T>
     {
@@ -91,7 +92,7 @@ namespace Algorithm
             if (Head == null) Head = newRoom;
 
             //기존의 마지막 방과 새로 추가되는 방을 연결해준다
-            if(Tail != null)
+            if (Tail != null)
             {
                 Tail.Next = newRoom;
                 newRoom.Prev = Tail;
@@ -107,27 +108,24 @@ namespace Algorithm
         public void Remove(Room<T> room)
         {
             //기존의 첫번째 방의 다음방을 첫번째 방으로 인정한다
-            if(Head == room)
+            if (Head == room)
             {
                 Head = Head.Next;
             }
             //기존의 마지막 방의 이전 방을 마지막 방으로 인정한다
             if (Tail == room) Tail = Tail.Prev;
 
-            if(room.Prev != null) room.Prev.Next = room.Next;
+            if (room.Prev != null) room.Prev.Next = room.Next;
 
             if (room.Next != null) room.Next.Prev = room.Prev;
 
             Count--;
         }
     }
+    class 내부 {
+    public LinkedList<int> _data3 = new LinkedList<int>(); // 연결 리스트 *c++ list
 
-   
-    class Board
-    {
-        public int[] _data = new int[25]; //배열       
-        public LinkedList<int> _data3 = new LinkedList<int>(); // 연결 리스트 *c++ list
-        public void Initialize()
+    public void Initialize()
         {
             _data3.AddLast(101);
             _data3.AddLast(102);
@@ -136,6 +134,22 @@ namespace Algorithm
             _data3.AddLast(105);
 
             _data3.Remove(node);
+        }
+    
+    }
+
+    */
+    #endregion
+
+
+
+    class Board
+    {
+        public int[] _data = new int[25]; //배열       
+        
+        public void Initialize()
+        {
+            
         }
     }
 }
