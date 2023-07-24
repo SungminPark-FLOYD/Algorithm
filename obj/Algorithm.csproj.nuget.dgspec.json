@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\algorithm\\Algorithm.csproj": {}
+    "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\Rookiss\\Algorithm\\Algorithm.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\algorithm\\Algorithm.csproj": {
+    "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\Rookiss\\Algorithm\\Algorithm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\algorithm\\Algorithm.csproj",
+        "projectUniqueName": "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\Rookiss\\Algorithm\\Algorithm.csproj",
         "projectName": "Algorithm",
-        "projectPath": "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\algorithm\\Algorithm.csproj",
+        "projectPath": "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\Rookiss\\Algorithm\\Algorithm.csproj",
         "packagesPath": "C:\\Users\\Seongmin Park\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\algorithm\\obj\\",
+        "outputPath": "C:\\Users\\Seongmin Park\\source\\repos\\Algorithm\\Rookiss\\Algorithm\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
