@@ -236,13 +236,20 @@ namespace Algorithm
             }
         }
 
-        const int MOVE_TICK = 10;
+        const int MOVE_TICK = 30;
         int _sumTick = 0;
         int _lastIndex = 0;
         //프레임 관리
         public void Update(int deltaTick)
         {
-            if (_lastIndex >= _points.Count) return;
+            if (_lastIndex >= _points.Count)
+            {
+                _lastIndex = 0;
+                _points.Clear();
+                _board.Initialize(_board.Size, this);
+                Initialize(1, 1, _board);
+            }
+
 
             _sumTick += deltaTick;
             if(_sumTick >= MOVE_TICK)
